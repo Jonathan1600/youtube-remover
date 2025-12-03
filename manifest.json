@@ -7,5 +7,10 @@
     "default_popup": "popup.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage", "activeTab", "scripting"]
+  "permissions": ["storage", "activeTab", "scripting"],
+  "content_scripts" : [{
+    "matches": ["https://www.youtube.com/*"],
+    "js": ["content.js"]
+  }
+  ]
 }
