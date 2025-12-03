@@ -1,3 +1,3 @@
-document.getElementById('removeshorts').addEventListener("click", () => {
+document.getElementById('remove-shorts').addEventListener("click", () => {
     console.log("CLICKED")
 })
