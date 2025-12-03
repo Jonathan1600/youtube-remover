@@ -49,3 +49,18 @@ button, input[type="submit"], input[type="reset"] {
 #options {
     padding: 10px;
 }
+
+#off-ui {
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+#off-ui p {
+    font-size: large;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
