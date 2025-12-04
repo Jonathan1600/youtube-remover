@@ -1,8 +1,8 @@
 window.addEventListener("load", async () => {
-    const extensionOn = await chrome.storage.sync.get(["extension"])
+    const storage = await chrome.storage.sync.get(["extension"])
     const offUI = document.getElementById('off-ui')
     const optionsElement = document.getElementById('options')
-    if (extensionOn && !!extensionOn.extension) {
+    if (storage && !!storage.extension) {
         offUI.style.display = "none"
         optionsElement.style.display = "block"
     } else {
@@ -28,21 +28,13 @@ document.getElementById('ytb-rmv-on').addEventListener("click", async () => {
     }
 })
 
-document.getElementById("remove-shorts").addEventListener("click", async () => {
-    console.log("CLICK")
-    const [tab] = await chrome.tabs.query({active:true, currentWindow: true})
-    chrome.scripting.executeScript({
-        target: {tabID: tab.id},
-        func: () => {
-            console.log("Trying to remove shorts")
-            // Remove the Shorts carousel drawer
-            const carousels = document.querySelectorAll(
-                "ytd-rich-section-renderer, ytd-reel-shelf-renderer"
-            );
-            carousels.forEach((carousel) => {
-                // Add specific condition to target Shorts carousel if needed
-            carousel.remove();
-            });
-        }
-    })
+document.getElementById("remove-shorts").addEventListener("click", async () => {    
+    const storage = await chrome.storage.sync.get(["shorts"])
+    if (storage && storage.shorts == true) {
+        await chrome.storage.sync.set({shorts: false})
+    } else if (storage && storage.shorts == false) {
+        await chrome.storage.sync.set({shorts: true})
+    }else {
+        await chrome.storage.sync.set({shorts: false})
+    }
 })
