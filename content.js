@@ -1,7 +1,7 @@
 window.addEventListener("load", async () => {
     const storage = await chrome.storage.sync.get(["shorts"])
     const carousels = document.querySelectorAll(
-        "ytd-rich-section-renderer, ytd-reel-shelf-renderer, grid-shelf-view-model"
+        "ytd-rich-section-renderer, ytd-reel-shelf-renderer, grid-shelf-view-model, [aria-label='Shorts'], [title='Shorts']"
     );
     if (storage.shorts == false) {
         carousels.forEach((carousel) => {
@@ -13,7 +13,7 @@ window.addEventListener("load", async () => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
     if(namespace == 'sync' && changes.shorts) {
         const carousels = document.querySelectorAll(
-            "ytd-rich-section-renderer, ytd-reel-shelf-renderer, grid-shelf-view-model"
+            "ytd-rich-section-renderer, ytd-reel-shelf-renderer, grid-shelf-view-model, [aria-label='Shorts'], [title='Shorts']"
         );
         if (!!changes.shorts.newValue) {
             carousels.forEach((carousel) => {
