@@ -78,9 +78,16 @@ function App() {
 			</div>
 			{isExtensionOn ? (
 				<div id="options">
-					<button id="remove-shorts" onClick={toggleShorts}>
-						Remove Shorts
-					</button>
+					<label>
+						<input
+							id="remove-shorts"
+							type="checkbox"
+							defaultChecked={!shortsEnabled}
+							onClick={toggleShorts}
+						/>
+						<span />
+						<strong>Remove Shorts</strong>
+					</label>
 				</div>
 			) : (
 				<div id="off-ui">
