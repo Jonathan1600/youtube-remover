@@ -1,0 +1,65 @@
+html {
+    width: 350px;
+    height: 350px;
+    background: #18181B;
+    color: #F1F5F9;
+    font-family: Candara,Calibri,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+}
+
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+#main-body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+}
+
+#header {
+    background: #27272A;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#header h2 {
+    font-size: larger;
+    padding: 0;
+    margin: 0;
+}
+
+#options {
+    padding: 10px;
+}
+
+#off-ui {
+    height: 100%;
+    width: 100%;
+}
+
+#off-ui p {
+    font-size: large;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
