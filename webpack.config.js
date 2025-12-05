@@ -36,6 +36,7 @@ module.exports = {
             patterns: [
                 { from: "manifest.json", to: "../manifest.json" },
                 { from: "icon.png", to: "../icon.png" },
+                { from: "content.js", to: "../content.js"},
             ],
         }),
         ...getHtmlPlugins(["index"]),
