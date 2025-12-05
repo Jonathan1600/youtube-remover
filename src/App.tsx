@@ -1,10 +1,12 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { shortsChromeInject } from "./shorts";
+import { exploreChromeInject } from "./explore";
 
 function App() {
 	const [isExtensionOn, setIsExtensionOn] = useState(false);
 	const [shortsEnabled, setShortsEnabled] = useState(true);
+	const [exploreEnabled, setExploreEnabled] = useState(true);
 
 	useEffect(() => {
 		const fetchExtensionData = async () => {
@@ -21,10 +23,11 @@ function App() {
 				setIsExtensionOn(false);
 			}
 		};
+
 		const fetchShortsData = async () => {
 			const storage = await chrome.storage.sync.get(["shorts"]);
 
-			if (storage && storage.shorts && typeof storage.shorts == "boolean") {
+			if (storage && typeof storage.shorts == "boolean") {
 				setShortsEnabled(storage.shorts);
 			} else {
 				await chrome.storage.sync.set({ shorts: true });
@@ -32,9 +35,16 @@ function App() {
 			}
 		};
 
-		shortsChromeInject().catch((err) => {
-			console.error("Error fetching data for chromeQuery:", err);
-		});
+		const fetchExploreData = async () => {
+			const storage = await chrome.storage.sync.get(["explore"]);
+
+			if (storage && typeof storage.explore == "boolean") {
+				setExploreEnabled(storage.explore);
+			} else {
+				await chrome.storage.sync.set({ explore: true });
+				setExploreEnabled(true);
+			}
+		};
 
 		fetchExtensionData().catch((err) => {
 			console.error("Error fetching data for extension:", err);
@@ -42,6 +52,18 @@ function App() {
 
 		fetchShortsData().catch((err) => {
 			console.error("Error fetching data for shorts:", err);
+		});
+
+		fetchExploreData().catch((err) => {
+			console.error("Error fetching data for explore:", err);
+		});
+
+		shortsChromeInject().catch((err) => {
+			console.error("Error fetching data for chromeQuery:", err);
+		});
+
+		exploreChromeInject().catch((err) => {
+			console.error("Error fetching data for chromeQuery:", err);
 		});
 	}, []);
 
@@ -53,6 +75,11 @@ function App() {
 	const toggleShorts = () => {
 		chrome.storage.sync.set({ shorts: !shortsEnabled });
 		setShortsEnabled(!shortsEnabled);
+	};
+
+	const toggleExplore = () => {
+		chrome.storage.sync.set({ explore: !exploreEnabled });
+		setExploreEnabled(!exploreEnabled);
 	};
 
 	return (
@@ -87,6 +114,16 @@ function App() {
 						/>
 						<span />
 						<strong>Remove Shorts</strong>
+					</label>
+					<label>
+						<input
+							id="remove-explore"
+							type="checkbox"
+							defaultChecked={!exploreEnabled}
+							onClick={toggleExplore}
+						/>
+						<span />
+						<strong>Remove Explore Section</strong>
 					</label>
 				</div>
 			) : (

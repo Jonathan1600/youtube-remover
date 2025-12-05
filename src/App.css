@@ -45,10 +45,13 @@ button, input[type="submit"], input[type="reset"] {
     padding: 0;
     margin: 0;
 }
-/* 
+
 #options {
     padding: 10px;
-} */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 #off-ui {
     height: 100%;
