@@ -1,18 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Youtube Remover",
+  "name": "Youtube Feature Remover",
   "description": "Removing unwanted Youtube Features",
   "version": "1.0",
   "host_permissions": ["*://*.youtube.com/*"],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "js/index.html",
     "default_icon": "icon.png"
   },
-  "permissions": ["storage", "activeTab", "scripting", "webNavigation", "tabs"],
-  "content_scripts": [
-    {
-      "matches": ["*://www.youtube.com/*"],
-      "js": ["content.js"]
-    }
-  ]
+  "permissions": ["storage", "activeTab", "scripting", "webNavigation", "tabs"]
 }
