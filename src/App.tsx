@@ -125,6 +125,16 @@ function App() {
 						<span />
 						<strong>Remove Explore Section</strong>
 					</label>
+					<label>
+						<input
+							id="remove-more"
+							type="checkbox"
+							defaultChecked={!exploreEnabled}
+							onClick={toggleExplore}
+						/>
+						<span />
+						<strong>Remove From YouTube</strong>
+					</label>
 				</div>
 			) : (
 				<div id="off-ui">
