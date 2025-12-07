@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { shortsChromeInject } from "./shorts";
 import { exploreChromeInject } from "./explore";
+import { moreChromeInject } from "./more";
 
 function App() {
 	const [isExtensionOn, setIsExtensionOn] = useState(false);
@@ -79,6 +80,10 @@ function App() {
 		});
 
 		exploreChromeInject().catch((err) => {
+			console.error("Error fetching data for chromeQuery:", err);
+		});
+
+		moreChromeInject().catch((err) => {
 			console.error("Error fetching data for chromeQuery:", err);
 		});
 	}, []);
