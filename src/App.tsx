@@ -7,6 +7,7 @@ function App() {
 	const [isExtensionOn, setIsExtensionOn] = useState(false);
 	const [shortsEnabled, setShortsEnabled] = useState(true);
 	const [exploreEnabled, setExploreEnabled] = useState(true);
+	const [moreEnabled, setMoreEnabled] = useState(true);
 
 	useEffect(() => {
 		const fetchExtensionData = async () => {
@@ -82,6 +83,11 @@ function App() {
 		setExploreEnabled(!exploreEnabled);
 	};
 
+	const toggleMore = () => {
+		chrome.storage.sync.set({ more: !moreEnabled });
+		setMoreEnabled(!moreEnabled);
+	};
+
 	return (
 		<div id="main-body">
 			<div id="header">
@@ -129,11 +135,11 @@ function App() {
 						<input
 							id="remove-more"
 							type="checkbox"
-							defaultChecked={!exploreEnabled}
-							onClick={toggleExplore}
+							defaultChecked={!moreEnabled}
+							onClick={toggleMore}
 						/>
 						<span />
-						<strong>Remove From YouTube</strong>
+						<strong>Remove More From YouTube</strong>
 					</label>
 				</div>
 			) : (
