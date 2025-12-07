@@ -47,6 +47,17 @@ function App() {
 			}
 		};
 
+		const fetchMoreData = async () => {
+			const storage = await chrome.storage.sync.get(["more"]);
+
+			if (storage && typeof storage.more == "boolean") {
+				setMoreEnabled(storage.more);
+			} else {
+				await chrome.storage.sync.set({ more: true });
+				setMoreEnabled(true);
+			}
+		};
+
 		fetchExtensionData().catch((err) => {
 			console.error("Error fetching data for extension:", err);
 		});
@@ -57,6 +68,10 @@ function App() {
 
 		fetchExploreData().catch((err) => {
 			console.error("Error fetching data for explore:", err);
+		});
+
+		fetchMoreData().catch((err) => {
+			console.error("Error fetching data for more:", err);
 		});
 
 		shortsChromeInject().catch((err) => {
