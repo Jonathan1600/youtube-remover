@@ -9,6 +9,7 @@ function App() {
 	const [shortsEnabled, setShortsEnabled] = useState(true);
 	const [exploreEnabled, setExploreEnabled] = useState(true);
 	const [moreEnabled, setMoreEnabled] = useState(true);
+	const [subscriptionsEnabled, setSubscriptionsEnabled] = useState(true);
 
 	useEffect(() => {
 		const fetchExtensionData = async () => {
@@ -108,6 +109,11 @@ function App() {
 		setMoreEnabled(!moreEnabled);
 	};
 
+	const toggleSubscriptions = () => {
+		chrome.storage.sync.set({ subscriptions: !subscriptionsEnabled });
+		setSubscriptionsEnabled(!subscriptionsEnabled);
+	};
+
 	return (
 		<div id="main-body">
 			<div id="header">
@@ -160,6 +166,16 @@ function App() {
 						/>
 						<span />
 						<strong>Remove More From YouTube</strong>
+					</label>
+					<label>
+						<input
+							id="remove-subscriptions"
+							type="checkbox"
+							defaultChecked={!subscriptionsEnabled}
+							onClick={toggleSubscriptions}
+						/>
+						<span />
+						<strong>Remove Subscriptions</strong>
 					</label>
 				</div>
 			) : (
