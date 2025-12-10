@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { shortsChromeInject } from "./shorts";
 import { exploreChromeInject } from "./explore";
 import { moreChromeInject } from "./more";
+import { subsChromeInject } from "./subs";
 
 function App() {
 	const [isExtensionOn, setIsExtensionOn] = useState(false);
 	const [shortsEnabled, setShortsEnabled] = useState(true);
 	const [exploreEnabled, setExploreEnabled] = useState(true);
 	const [moreEnabled, setMoreEnabled] = useState(true);
+	const [subsEnabled, setSubsEnabled] = useState(true);
 
 	useEffect(() => {
 		const fetchExtensionData = async () => {
@@ -59,6 +61,17 @@ function App() {
 			}
 		};
 
+		const fetchSubsData = async () => {
+			const storage = await chrome.storage.sync.get(["subs"]);
+
+			if (storage && typeof storage.subs == "boolean") {
+				setSubsEnabled(storage.subs);
+			} else {
+				await chrome.storage.sync.set({ subs: true });
+				setSubsEnabled(true);
+			}
+		};
+
 		fetchExtensionData().catch((err) => {
 			console.error("Error fetching data for extension:", err);
 		});
@@ -75,6 +88,10 @@ function App() {
 			console.error("Error fetching data for more:", err);
 		});
 
+		fetchSubsData().catch((err) => {
+			console.error("Error fetching data for subs:", err);
+		});
+
 		shortsChromeInject().catch((err) => {
 			console.error("Error fetching data for chromeQuery:", err);
 		});
@@ -85,6 +102,10 @@ function App() {
 
 		moreChromeInject().catch((err) => {
 			console.error("Error fetching data for chromeQuery:", err);
+		});
+
+		subsChromeInject().catch((err) => {
+			console.error("Error fetching data for subs:", err);
 		});
 	}, []);
 
@@ -106,6 +127,11 @@ function App() {
 	const toggleMore = () => {
 		chrome.storage.sync.set({ more: !moreEnabled });
 		setMoreEnabled(!moreEnabled);
+	};
+
+	const toggleSubs = () => {
+		chrome.storage.sync.set({ subs: !subsEnabled });
+		setSubsEnabled(!subsEnabled);
 	};
 
 	return (
@@ -160,6 +186,16 @@ function App() {
 						/>
 						<span />
 						<strong>Remove More From YouTube</strong>
+					</label>
+					<label>
+						<input
+							id="remove-subs"
+							type="checkbox"
+							defaultChecked={!subsEnabled}
+							onClick={toggleSubs}
+						/>
+						<span />
+						<strong>Remove Subscriptions</strong>
 					</label>
 				</div>
 			) : (
