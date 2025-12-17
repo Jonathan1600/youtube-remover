@@ -42,7 +42,7 @@ const hideMoreSection = async () => {
 
 		if (results.snapshotLength > 0) {
 			const storage = await chrome.storage.sync.get(["more", "isExtensionOn"]);
-			if (storage.more && storage.isExtensionOn) {
+			if (storage.more || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
@@ -71,7 +71,7 @@ const hideSubsSection = async () => {
 
 		if (results.snapshotLength > 0) {
 			const storage = await chrome.storage.sync.get(["subs", "isExtensionOn"]);
-			if (storage.subs && storage.isExtensionOn) {
+			if (storage.subs || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
@@ -101,7 +101,7 @@ const hideShortsSection = async () => {
 				"shorts",
 				"isExtensionOn",
 			]);
-			if (storage.shorts && storage.isExtensionOn) {
+			if (storage.shorts || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
