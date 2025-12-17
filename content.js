@@ -9,8 +9,11 @@ const hideExploreSection = async () => {
 		);
 
 		if (results.snapshotLength > 0) {
-			const storage = await chrome.storage.sync.get(["explore"]);
-			if (storage.explore) {
+			const storage = await chrome.storage.sync.get([
+				"explore",
+				"isExtensionOn",
+			]);
+			if (storage.explore || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
@@ -38,8 +41,8 @@ const hideMoreSection = async () => {
 		);
 
 		if (results.snapshotLength > 0) {
-			const storage = await chrome.storage.sync.get(["more"]);
-			if (storage.more) {
+			const storage = await chrome.storage.sync.get(["more", "isExtensionOn"]);
+			if (storage.more || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
@@ -67,8 +70,8 @@ const hideSubsSection = async () => {
 		);
 
 		if (results.snapshotLength > 0) {
-			const storage = await chrome.storage.sync.get(["subs"]);
-			if (storage.subs) {
+			const storage = await chrome.storage.sync.get(["subs", "isExtensionOn"]);
+			if (storage.subs || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
@@ -94,8 +97,11 @@ const hideShortsSection = async () => {
 		);
 
 		if (carousels.length > 0) {
-			const storage = await chrome.storage.sync.get(["shorts"]);
-			if (storage.shorts) {
+			const storage = await chrome.storage.sync.get([
+				"shorts",
+				"isExtensionOn",
+			]);
+			if (storage.shorts || !storage.isExtensionOn) {
 				obs.disconnect();
 				return;
 			}
