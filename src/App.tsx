@@ -4,6 +4,7 @@ import { shortsChromeInject } from "./shorts";
 import { exploreChromeInject } from "./explore";
 import { moreChromeInject } from "./more";
 import { subsChromeInject } from "./subs";
+import { searchChromeInject } from "./search";
 
 function App() {
 	const [isExtensionOn, setIsExtensionOn] = useState(false);
@@ -11,6 +12,7 @@ function App() {
 	const [exploreEnabled, setExploreEnabled] = useState(true);
 	const [moreEnabled, setMoreEnabled] = useState(true);
 	const [subsEnabled, setSubsEnabled] = useState(true);
+	const [searchEnabled, setSearchEnabled] = useState(true);
 
 	useEffect(() => {
 		const fetchExtensionData = async () => {
@@ -72,6 +74,17 @@ function App() {
 			}
 		};
 
+		const fetchSearchData = async () => {
+			const storage = await chrome.storage.sync.get(["search"]);
+
+			if (storage && typeof storage.search == "boolean") {
+				setSearchEnabled(storage.search);
+			} else {
+				await chrome.storage.sync.set({ search: true });
+				setSearchEnabled(true);
+			}
+		};
+
 		fetchExtensionData().catch((err) => {
 			console.error("Error fetching data for extension:", err);
 		});
@@ -92,6 +105,10 @@ function App() {
 			console.error("Error fetching data for subs:", err);
 		});
 
+		fetchSearchData().catch((err) => {
+			console.error("Error fetching data for search:", err);
+		});
+
 		shortsChromeInject().catch((err) => {
 			console.error("Error fetching data for chromeQuery:", err);
 		});
@@ -106,6 +123,10 @@ function App() {
 
 		subsChromeInject().catch((err) => {
 			console.error("Error fetching data for subs:", err);
+		});
+
+		searchChromeInject().catch((err) => {
+			console.error("Error fetching data for search:", err);
 		});
 	}, []);
 
@@ -132,6 +153,11 @@ function App() {
 	const toggleSubs = () => {
 		chrome.storage.sync.set({ subs: !subsEnabled });
 		setSubsEnabled(!subsEnabled);
+	};
+
+	const toggleSearch = () => {
+		chrome.storage.sync.set({ search: !searchEnabled });
+		setSearchEnabled(!searchEnabled);
 	};
 
 	return (
@@ -196,6 +222,16 @@ function App() {
 						/>
 						<span />
 						<strong>Remove Subscriptions</strong>
+					</label>
+					<label>
+						<input
+							id="remove-search"
+							type="checkbox"
+							defaultChecked={!searchEnabled}
+							onClick={toggleSearch}
+						/>
+						<span />
+						<strong>Remove Search Bar</strong>
 					</label>
 				</div>
 			) : (
