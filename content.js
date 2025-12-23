@@ -90,6 +90,31 @@ const hideSubsSection = async () => {
 	observer.observe(document.body, { childList: true, subtree: true });
 };
 
+const hideSearchSection = async () => {
+	const observer = new MutationObserver(async (mutations, obs) => {
+		const carousels = document.querySelectorAll(
+			"yt-searchbox, #voice-search-button"
+		);
+
+		if (carousels.length > 0) {
+			const storage = await chrome.storage.sync.get([
+				"search",
+				"isExtensionOn",
+			]);
+			if (storage.search || !storage.isExtensionOn) {
+				obs.disconnect();
+				return;
+			}
+
+			carousels.forEach((carousel) => {
+				carousel.setAttribute("style", "display: none");
+			});
+		}
+	});
+
+	observer.observe(document.body, { childList: true, subtree: true });
+};
+
 const hideShortsSection = async () => {
 	const observer = new MutationObserver(async (mutations, obs) => {
 		const carousels = document.querySelectorAll(
@@ -119,3 +144,4 @@ hideShortsSection();
 hideExploreSection();
 hideMoreSection();
 hideSubsSection();
+hideSearchSection();
